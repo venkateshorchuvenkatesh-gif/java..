@@ -1,0 +1,67 @@
+XML Program:
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+fx:controller="com.example.TipCalculatorController"
+alignment="CENTER" spacing="10">
+
+<Label text="Tip Calculator" style="-fx-font-size: 20px;"/>
+
+<TextField fx:id="billAmountField" promptText="Enter Bill Amount" />
+<TextField fx:id="tipPercentageField" promptText="Enter Tip Percentage" />
+
+<Button text="Calculate Tip" onAction="#calculateTip" />
+<Button text="Reset" onAction="#reset" />
+
+<Label fx:id="tipAmountLabel" />
+<Label fx:id="errorMessageLabel" style="-fx-text-fill: red;" />
+</VBox>
+
+Program:
+
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
+public class TipCalculatorController {
+    @FXML
+private TextField billAmountField;
+
+    @FXML
+private TextField tipPercentageField;
+
+    @FXML
+private Label tipAmountLabel;
+
+    @FXML
+private Label errorMessageLabel;
+
+    @FXML
+private void calculateTip() {
+try {
+double billAmount = Double.parseDouble(billAmountField.getText());
+double tipPercentage = Double.parseDouble(tipPercentageField.getText());
+
+double tipAmount = billAmount * (tipPercentage / 100);
+tipAmountLabel.setText(String.format("Tip Amount: $%.2f", tipAmount));
+errorMessageLabel.setText("");
+        } catch (NumberFormatException e) {
+errorMessageLabel.setText("Error: Invalid input. Please enter numbers.");
+        }
+    }
+
+    @FXML
+private void reset() {
+billAmountField.clear();
+tipPercentageField.clear();
+tipAmountLabel.setText("");
+errorMessageLabel.setText("");
+    }
+}
